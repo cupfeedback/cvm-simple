@@ -45,12 +45,12 @@ print("\n[그래프용 데이터 (Excel: Real vs Estimate)]")
 plot_data = model.process_plot_data
 print(plot_data)
 
-# [NEW] Krinsky & Robb 신뢰구간 계산 (1000번 시뮬레이션)
+# 2. Krinsky & Robb 신뢰구간 계산 (1000번 시뮬레이션)
 print("\n[Krinsky & Robb Simulated Confidence Intervals]")
 kr_df = model.calculate_kr_confidence_interval(n_sim=1000, ci=0.95)
 print(kr_df.round(1))
 
-# 2. (보너스) 실제로 그래프 그려보기 (matplotlib 필요)
+# 3. 그래프 그려보기 (matplotlib 필요)
 try:
     import matplotlib.pyplot as plt
 

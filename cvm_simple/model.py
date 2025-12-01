@@ -7,11 +7,8 @@ from scipy.stats import norm
 class SingleBoundedLogit:
     """
     [ENG] Single-Bounded Dichotomous Choice (SBDC) CVM Model (Log-Logit)
-    This class implements the logic of the 'Solver' function in Excel using Python.
     It provides intermediate calculation steps (processes) for educational and verification purposes.
-
     [KOR] 단일양분선택형(SBDC) CVM 모델 (로그-로짓 모형)
-    이 클래스는 엑셀의 '해 찾기' 기능 로직을 파이썬으로 구현한 것입니다.
     교육 및 검증 목적으로 중간 계산 과정(Process)을 확인할 수 있는 기능을 제공합니다.
     """
 
@@ -123,7 +120,7 @@ class SingleBoundedLogit:
         probs = 1 / (1 + np.exp(-(a + b * steps_log)))
         self.wtp_mean = np.sum(probs * 10)  # Area = Height(Prob) * Width(10)
 
-        # [NEW] 3. Adjusted Truncated Mean WTP
+        # 3. Adjusted Truncated Mean WTP
         # 공식: Truncated Mean / (1 - Prob(Yes at MaxBid))
         # 의미: WTP가 최대 제시액을 넘지 않는다고 가정하고 확률을 100%로 보정함
         max_bid_log = np.log(max(self._max_bid_integral, 1e-10))
@@ -143,7 +140,7 @@ class SingleBoundedLogit:
         a, b = self._params
         bid = self._data['ln_bid'].values
 
-        # [NEW] 표본 수(n) 계산
+        # 표본 수(n) 계산
         self.n_samples = self._data[self._cols['yes']].sum() + self._data[self._cols['no']].sum()
 
         n_total = self._data[self._cols['yes']] + self._data[self._cols['no']]
@@ -187,7 +184,7 @@ class SingleBoundedLogit:
         p_a = 2 * (1 - norm.cdf(abs(t_a)))
         p_b = 2 * (1 - norm.cdf(abs(t_b)))
 
-        # [NEW] 별 표시 함수 (Significance Stars)
+        # 별 표시 함수 (Significance Stars)
         def get_star(p):
             if p < 0.001:
                 return "***"
@@ -209,7 +206,7 @@ class SingleBoundedLogit:
             'Sig.': [get_star(p_a), get_star(p_b)]  # 별 컬럼 추가
         })
 
-        # [NEW] 비절사 평균 (Untruncated Mean) 계산 - 비교용
+        # 비절사 평균 (Untruncated Mean) 계산 - 비교용
         # 공식: Mean = exp(-a/b) * (pi/|b|) / sin(pi/|b|)
         # 단, |b| > 1 이어야 수렴함. 그 외에는 발산하거나 매우 큼.
         if abs(b) > 1:
@@ -275,7 +272,7 @@ class SingleBoundedLogit:
         probs_sim = 1 / (1 + np.exp(-v_sim))
         trunc_mean_sim = np.sum(probs_sim * 100, axis=1)  # 면적 합계
 
-        # [NEW] Adjusted Truncated Mean 시뮬레이션
+        # Adjusted Truncated Mean 시뮬레이션
         # 각 시뮬레이션 별 MaxBid에서의 Yes 확률 계산
         max_bid_log = np.log(self._max_bid_integral)
         v_max_sim = a_sim + b_sim * max_bid_log
@@ -404,7 +401,6 @@ class SingleBoundedLogit:
     def process_plot_data(self):
         """
         [ENG] Generate data for plotting (Actual vs Predicted)
-
         [KOR] 시각화(그래프)를 위한 데이터 생성 (실측치 vs 예측치)
         """
         if self._params is None: return "Run .fit() first."
@@ -444,7 +440,7 @@ class SingleBoundedLogit:
         print("=" * 65)
         print("   CVM Single-Bounded Log-Logit Model Results")
         print("=" * 65)
-        # [NEW] 표본 수(n) 출력
+        # 표본 수(n) 출력
         print(f"Number of Obs (n): {self.n_samples}")
         print(f"Log-Likelihood : {-self._optimization_result.fun:.4f}")
         print(f"AIC            : {2 * 2 + 2 * self._optimization_result.fun:.4f}")
@@ -456,7 +452,7 @@ class SingleBoundedLogit:
         print(f"Median WTP     : {self.wtp_median:,.1f}")
         print(f"Mean WTP       : {self.wtp_mean:,.1f} (Truncated at {self._max_bid_integral})")
 
-        # [NEW] 엑셀의 그 엄청난 숫자(비절사 평균)도 참고용으로 보여줌
+        # 비절사 평균도 참고용으로 보여줌
         if self.wtp_mean_untruncated != np.inf:
             print(f"Mean WTP (Raw)   : {self.wtp_mean_untruncated:,.1f} (Theoretical, Do not use for policy)")
         else:
