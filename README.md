@@ -1,0 +1,155 @@
+-----
+
+# cvm\_simple
+
+**Single-Bounded Dichotomous Choice (SBDC) CVM Analysis Package** *for Log-Logit Models in Python.*
+
+`cvm_simple` is a Python package designed to perform Single-Bounded Contingent Valuation Method (CVM) analysis. Unlike other "black-box" statistical packages, this library is built to reproduce the exact calculation steps of **Microsoft Excel's Solver**. It allows users to trace every step of the calculation—from log-transformation to Hessian matrix derivation—making it an excellent tool for educational purposes and cross-verification with Excel results.
+
+---
+
+## ⚠️ Data Preparation (Important)
+
+**Before running the analysis, please exclude "Protest Responses" from your dataset.**
+
+* **Protest Responses** refer to respondents who select "No" (0 WTP) not because they value the good at zero, but because they object to the payment vehicle (e.g., taxes) or the survey scenario itself.
+* Including these invalid zeros can bias the WTP estimation.
+* This package assumes that the input data consists only of **valid responses**.
+
+-----
+
+## 🌟 Key Features
+
+  * **Logic Replication**: Implements the exact "Log-Logit" model ($V = a + b \ln(Bid)$) commonly used in CVM tutorials.
+  * **Traceable Process ("White-Box")**: Provides access to intermediate calculation steps (Process 1\~6), allowing 1:1 comparison with Excel spreadsheets.
+  * **Statistical Inference**: Calculates Hessian matrices (`Laa`, `Lbb`), Variance-Covariance matrices, Standard Errors, t-values, and p-values.
+  * **Bilingual Support**: All docstrings and comments are provided in both **English** and **Korean**.
+
+## 📦 Installation
+
+You can install this package locally using `pip`. Navigate to the directory containing `setup.py` and run:
+
+```bash
+pip install cvm-simple
+```
+
+## 🚀 Quick Start
+
+Here is a simple example of how to analyze CVM data using a pandas DataFrame.
+
+```python
+import pandas as pd
+from cvm_simple import SingleBoundedLogit
+
+# 1. Prepare Data
+df = pd.DataFrame({
+    'bid': [3000, 5000, 8000, 12000, 20000],
+    'yes': [57, 63, 45, 36, 29],
+    'no':  [18, 11, 27, 33, 43]
+})
+
+# 2. Initialize and Fit Model
+model = SingleBoundedLogit()
+model.fit(df, bid_col='bid', yes_col='yes', no_col='no')
+
+# 3. Print Summary Report
+model.summary()
+
+# 4. Check Plotting Data (Real vs Estimate)
+print(model.process_plot_data)
+
+# 5. Calculate Confidence Intervals (Krinsky & Robb)
+model.calculate_kr_confidence_interval(n_sim=1000)
+```
+
+## 🔍 Traceable Processes (Excel Mapping)
+
+You can access intermediate steps to verify calculations against Excel.
+
+| Property | Description | Excel Equivalent |
+| :--- | :--- | :--- |
+| `model.process1_log_transformation` | Log-transformed bids | `ln(Bid)` column |
+| `model.process2_utility` | Utility calculation ($V$) | Hidden Utility formula |
+| `model.process3_probability` | Probability calculation ($P$) | `Estimate` column |
+| `model.process4_likelihood` | Log-Likelihood contribution | `SumProduct` components |
+| `model.process5_wtp` | Median & Truncated Mean WTP | WTP calculation area |
+| `model.process6_statistics` | Hessian & Inference | `Laa`, `Lbb`, `S.E`, `p-value` |
+
+### Example: Verifying Statistics
+
+```python
+# Check the Hessian Matrix (matches Excel's Laa, Lab, Lbb)
+print(model.process6_statistics)
+```
+
+-----
+
+-----
+
+# [한국어] cvm\_simple
+
+**로직을 구현한 단일양분선택형(SBDC) CVM 분석**
+
+`cvm_simple`은 단일양분선택형 조건부 가치측정법(CVM) 분석을 위한 파이썬 패키지입니다. 결과값만 보여주는 일반적인 통계 패키지와 달리, 이 패키지는 로그 변환부터 헤시안 행렬 계산까지 분석의 모든 단계를 추적할 수 있어, 결과값을 검증하는 데 최적화되어 있습니다.
+
+## 주의 사항
+ * **지불 거부자 제외**: 분석을 수행하기 전에, 반드시 데이터에서 "지불거부자(Protest responses)"를 제외해야 합니다.
+ * 지불거부자란? 해당 재화의 가치가 없어서가 아니라, 세금 납부 방식이나 설문 시나리오 자체에 대한 반감 때문에 '아니오(0원)'를 선택한 응답자를 말합니다. 이러한 응답자가 포함될 경우 지불용의액(WTP)이 과소 추정되는 등 결과에 편향(Bias)이 발생할 수 있습니다. 이 패키지는 지불거부자가 제거된 유효한 응답 데이터만을 입력으로 가정합니다.
+
+## 🌟 주요 기능
+
+  * **엑셀 로직 완벽 구현**: 엑셀 실습에서 주로 사용되는 "로그-로짓(Log-Logit)" 모형($V = a + b \ln(Bid)$)을 그대로 따릅니다.
+  * **과정 추적 기능 ("화이트박스")**: 분석의 중간 과정(Process 1\~6)을 속성으로 제공하여, 엑셀 시트의 특정 셀 값과 1:1로 비교할 수 있습니다.
+  * **통계적 추론**: 최적화 결과뿐만 아니라 헤시안 행렬(`Laa`, `Lbb`), 공분산 행렬, 표준오차, t값, p값 등 상세 통계량을 제공합니다.
+  * **이중 언어 지원**: 코드 내 모든 설명(주석, Docstring)이 **한국어**와 **영어**로 병기되어 있습니다.
+
+## 📦 설치 방법
+
+터미널(CMD)에서 `setup.py` 파일이 있는 폴더로 이동한 후, 아래 명령어를 실행하세요.
+
+```bash
+pip install cvm-simple
+```
+
+## 🚀 사용 예시
+
+판다스(Pandas) 데이터프레임을 사용하여 간단하게 분석할 수 있습니다.
+
+```python
+import pandas as pd
+from cvm_simple import SingleBoundedLogit
+
+# 1. 데이터 준비 (엑셀 파일 로드 등)
+df = pd.DataFrame({
+    '제시액': [3000, 5000, 8000, 12000, 20000],
+    '찬성': [57, 63, 45, 36, 29],
+    '반대': [18, 11, 27, 33, 43]
+})
+
+# 2. 모델 생성 및 학습 (컬럼명 매핑)
+model = SingleBoundedLogit()
+model.fit(df, bid_col='제시액', yes_col='찬성', no_col='반대')
+
+# 3. 종합 결과 리포트 출력
+model.summary()
+```
+
+## 🔍 계산 과정 추적 (엑셀 매핑 가이드)
+
+`model.processN` 속성을 호출하여 각 단계별 계산 값을 확인할 수 있습니다.
+
+| 속성 (Property) | 설명 | 엑셀 대응 항목 |
+| :--- | :--- | :--- |
+| `model.process1_log_transformation` | 제시액 로그 변환 | `ln(Bid)` 열 |
+| `model.process2_utility` | 효용 함수($V$) 계산 값 | 효용 계산 수식 |
+| `model.process3_probability` | 추정 구매 확률($P$) | `Estimate` (추정 확률) 열 |
+| `model.process4_likelihood` | 로그우도 기여분 | `SumProduct` 내부 구성요소 |
+| `model.process5_wtp` | 중앙값 및 절사 평균 WTP | 우측 WTP 계산 영역 |
+| `model.process6_statistics` | 헤시안 및 통계적 유의성 | `Laa`, `Lbb`, `표준오차`, `p값` |
+
+### 예시: 통계량 검증하기
+
+```python
+# 엑셀의 Laa, Lbb 값과 비교해 보세요.
+print(model.process6_statistics)
+```

@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cvm-simple"
+version = "0.1.0"
+description = "Single-Bounded CVM Analysis"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "cupfeedback"}
+]
+keywords = ["cvm", "contingent valuation", "economics", "wtp", "willingness to pay", "logit"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.7"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+]
+
+[project.urls]
+# GitHub URL을 나중에 추가하세요
+# Homepage = "https://github.com/yourusername/cvm-simple"
+# Repository = "https://github.com/yourusername/cvm-simple"
+
+[tool.setuptools.packages.find]
+include = ["cvm_simple*"]
