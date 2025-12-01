@@ -36,9 +36,8 @@ dependencies = [
 ]
 
 [project.urls]
-# GitHub URL을 나중에 추가하세요
-# Homepage = "https://github.com/yourusername/cvm-simple"
-# Repository = "https://github.com/yourusername/cvm-simple"
+ Homepage = "https://github.com/cupfeedback/cvm-simple"
+ Repository = "https://github.com/cupfeedback/cvm-simple"
 
 [tool.setuptools.packages.find]
 include = ["cvm_simple*"]

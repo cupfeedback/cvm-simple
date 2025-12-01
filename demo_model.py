@@ -40,7 +40,7 @@ print(model.process5_wtp)
 print("\n[Process 6] statistics:")
 print(model.process6_statistics)
 
-# 1. 엑셀의 그래프용 표 데이터 확인
+# 1. 그래프용 표 데이터 확인
 print("\n[그래프용 데이터 (Excel: Real vs Estimate)]")
 plot_data = model.process_plot_data
 print(plot_data)
@@ -62,7 +62,7 @@ try:
     # 그래프 그리기
     plt.figure(figsize=(8, 5))
 
-    # (1) 모델 추정선 (부드러운 곡선을 위해 점을 더 촘촘하게 찍을 수도 있지만, 여기선 엑셀처럼 직선 연결)
+    # (1) 모델 추정선 (부드러운 곡선을 위해 점을 더 촘촘하게 찍을 수도 있지만, 여기선 직선 연결)
     plt.plot(bids, est, 'b-', label='Estimate (Model)', marker='o')  # 파란 선
 
     # (2) 실제 데이터 점
