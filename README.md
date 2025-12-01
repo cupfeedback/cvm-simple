@@ -2,7 +2,7 @@
 
 # cvm\_simple
 
-**Single-Bounded Dichotomous Choice (SBDC) CVM Analysis Package** *for Log-Logit Models in Python.*
+**Single-Bounded Dichotomous Choice (SBDC) CVM Analysis Package**
 
 `cvm_simple` is a Python package designed to perform Single-Bounded Contingent Valuation Method (CVM) analysis. It allows users to trace every step of the calculation—from log-transformation to Hessian matrix derivation—making it an excellent tool for educational purposes and cross-verification with Excel results.
 
@@ -105,7 +105,7 @@ print(model.process6_statistics)
 ## 🌟 주요 기능
 
   * **로직 완벽 구현**: 주로 사용되는 "로그-로짓(Log-Logit)" 모형($V = a + b \ln(Bid)$)을 그대로 따릅니다.
-  * **과정 추적 기능 ("화이트박스")**: 분석의 중간 과정(Process 1\~6)을 속성으로 제공하여, 엑셀 시트의 특정 셀 값과 1:1로 비교할 수 있습니다.
+  * **과정 추적 기능**: 분석의 중간 과정(Process 1\~6)을 속성으로 제공합니다.
   * **통계적 추론**: 최적화 결과뿐만 아니라 헤시안 행렬, 공분산 행렬, 표준오차, t값, p값 등 상세 통계량을 제공합니다.
   * **이중 언어 지원**: 코드 내 모든 설명이 **한국어**와 **영어**로 병기되어 있습니다.
 
