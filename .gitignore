@@ -1,4 +1,5 @@
 # .gitignore 파일 내용
+.pypirc
 
 # 파이썬 부산물 제외
 __pycache__/

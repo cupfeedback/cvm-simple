@@ -27,10 +27,16 @@
 
 ## 📦 Installation
 
-You can install this package locally using `pip`. Navigate to the directory containing `setup.py` and run:
+You can install the latest version of this package directly from PyPI:
 
 ```bash
 pip install cvm-simple
+```
+
+For Google Colab or Jupyter Notebook users: Please add an exclamation mark (!) before the command:
+
+```bash
+!pip install cvm-simple
 ```
 
 ## 🚀 Quick Start
@@ -86,8 +92,6 @@ print(model.process6_statistics)
 
 -----
 
------
-
 # [한국어] cvm\_simple
 
 **로직을 구현한 단일양분선택형(SBDC) CVM 분석**
@@ -107,11 +111,18 @@ print(model.process6_statistics)
 
 ## 📦 설치 방법
 
-터미널(CMD)에서 `setup.py` 파일이 있는 폴더로 이동한 후, 아래 명령어를 실행하세요.
+PyPI를 통해 최신 버전을 바로 설치할 수 있습니다.
 
 ```bash
 pip install cvm-simple
 ```
+
+Google Colab 또는 Jupyter Notebook 사용 시: 명령어 앞에 느낌표(!)를 붙여서 실행해 주세요:
+```bash
+!pip install cvm-simple
+```
+
+
 
 ## 🚀 사용 예시
 
