@@ -1,15 +1,18 @@
 """
-CVM Single-Bounded Logit Model Test Script
+CVM Single-Bounded Logit Model Demo Script
+
+Example: Estimating WTP for wetland conservation program
+(습지 보전 프로그램에 대한 지불의사금액 추정 예시)
 """
 import pandas as pd
 from cvm_simple import SingleBoundedLogit
 
-# 테스트용 샘플 데이터 (CVM 설문조사 형태)
-# bid: 제시금액, yes: 찬성 응답수, no: 반대 응답수
+# Sample data: Wetland conservation program (annual household tax)
+# 습지 보전을 위한 연간 가구당 추가 세금 설문 결과
 sample_data = pd.DataFrame({
-    'bid': [3000, 5000, 8000, 12000, 20000],
-    'yes': [57, 63, 45, 36, 29],
-    'no':  [18, 11, 27, 33, 43]
+    'bid': [2000, 5000, 10000, 15000, 30000],
+    'yes': [78, 62, 45, 28, 12],
+    'no':  [22, 38, 55, 72, 88]
 })
 
 print("=" * 50)
@@ -19,8 +22,9 @@ print(sample_data)
 print()
 
 # 모델 생성 및 학습
+# max_bid_integral: 절사 평균 계산 시 적분 상한 (보통 최대 제시액의 2~3배)
 model = SingleBoundedLogit()
-model.fit(sample_data, bid_col='bid', yes_col='yes', no_col='no')
+model.fit(sample_data, bid_col='bid', yes_col='yes', no_col='no', max_bid_integral=60000)
 
 # 결과 요약 출력
 print()
@@ -68,9 +72,9 @@ try:
     # (2) 실제 데이터 점
     plt.plot(bids, real, 'rs', label='Real (Observed)')  # 빨간 네모 점
 
-    plt.title('CVM Probability of Acceptance')
+    plt.title('CVM: Wetland Conservation WTP')
     plt.xlabel('Bid Amount (KRW)')
-    plt.ylabel('Probability (Yes)')
+    plt.ylabel('Probability of Yes')
     plt.legend()
     plt.grid(True)
     plt.show()

@@ -41,22 +41,23 @@ For Google Colab or Jupyter Notebook users: Please add an exclamation mark (!) b
 
 ## 🚀 Quick Start
 
-Here is a simple example of how to analyze CVM data using a pandas DataFrame.
+Here is a simple example: estimating WTP for national park conservation.
 
 ```python
 import pandas as pd
 from cvm_simple import SingleBoundedLogit
 
-# 1. Prepare Data
+# 1. Prepare Data (Annual donation for national park conservation)
+# bid: suggested donation amount ($), yes/no: number of responses
 df = pd.DataFrame({
-    'bid': [3000, 5000, 8000, 12000, 20000],
-    'yes': [57, 63, 45, 36, 29],
-    'no':  [18, 11, 27, 33, 43]
+    'bid': [5, 10, 20, 50, 100],
+    'yes': [80, 65, 52, 30, 18],
+    'no':  [20, 35, 48, 70, 82]
 })
 
 # 2. Initialize and Fit Model
 model = SingleBoundedLogit()
-model.fit(df, bid_col='bid', yes_col='yes', no_col='no')
+model.fit(df, bid_col='bid', yes_col='yes', no_col='no', max_bid_integral=200)
 
 # 3. Print Summary Report
 model.summary()
@@ -89,6 +90,15 @@ You can access intermediate steps to verify calculations.
 # Check the Hessian Matrix
 print(model.process6_statistics)
 ```
+
+## 📌 Parameter Guide
+
+| Parameter | Description | Recommendation |
+|:----------|:------------|:---------------|
+| `bid_col` | Column name for bid amounts | Required |
+| `yes_col` | Column name for "Yes" responses | Required |
+| `no_col` | Column name for "No" responses | Required |
+| `max_bid_integral` | Upper limit for truncated mean integration | **2~3x of max bid** (e.g., if max bid is $100, set to 200~300) |
 
 -----
 
@@ -124,22 +134,23 @@ Google Colab 또는 Jupyter Notebook 사용 시: 명령어 앞에 느낌표(!)�
 
 ## 🚀 사용 예시
 
-판다스(Pandas) 데이터프레임을 사용하여 간단하게 분석할 수 있습니다.
+도시 공원 환경 개선을 위한 지불의사금액(WTP)을 추정하는 예시입니다.
 
 ```python
 import pandas as pd
 from cvm_simple import SingleBoundedLogit
 
-# 1. 데이터 준비 (지불거부자 제외 필수)
+# 1. 데이터 준비 (도시 공원 환경 개선을 위한 월 세금)
+# 제시액: 월 추가 세금(원), 찬성/반대: 응답자 수
 df = pd.DataFrame({
-    '제시액': [3000, 5000, 8000, 12000, 20000],
-    '찬성': [57, 63, 45, 36, 29],
-    '반대': [18, 11, 27, 33, 43]
+    '제시액': [1000, 3000, 5000, 10000, 20000],
+    '찬성': [85, 70, 55, 35, 15],
+    '반대': [15, 30, 45, 65, 85]
 })
 
 # 2. 모델 학습
 model = SingleBoundedLogit()
-model.fit(df, bid_col='제시액', yes_col='찬성', no_col='반대')
+model.fit(df, bid_col='제시액', yes_col='찬성', no_col='반대', max_bid_integral=50000)
 
 # 3. 종합 결과 리포트 (AIC, 유의성 별 표시 포함)
 model.summary()
@@ -170,3 +181,12 @@ model.calculate_kr_confidence_interval(n_sim=1000)
 ```python
 print(model.process6_statistics)
 ```
+
+## 📌 파라미터 가이드
+
+| 파라미터 | 설명 | 권장값 |
+|:---------|:-----|:-------|
+| `bid_col` | 제시액 컬럼명 | 필수 |
+| `yes_col` | 찬성 응답수 컬럼명 | 필수 |
+| `no_col` | 반대 응답수 컬럼명 | 필수 |
+| `max_bid_integral` | 절사 평균 계산 시 적분 상한 | **최대 제시액의 2~3배** (예: 최대 제시액 20,000원 → 40,000~60,000) |

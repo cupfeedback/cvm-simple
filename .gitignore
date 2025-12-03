@@ -20,3 +20,6 @@ env/
 
 # PyCharm 설정 파일 제외
 .idea/
+
+# 배포 가이드 (비공개)
+DEPLOY_GUIDE.md
