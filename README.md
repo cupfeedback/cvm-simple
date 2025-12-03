@@ -8,7 +8,7 @@
 
 ---
 
-## ⚠️ Data Preparation (Important)
+## Data Preparation (Important)
 
 **Before running the analysis, please exclude "Protest Responses" from your dataset.**
 
@@ -18,14 +18,14 @@
 
 -----
 
-## 🌟 Key Features
+## Key Features
 
   * **Logic Replication**: Implements the exact "Log-Logit" model ($V = a + b \ln(Bid)$) commonly used in CVM tutorials.
   * **Traceable Process**: Provides access to intermediate calculation steps (Process 1\~6).
   * **Statistical Inference**: Calculates Hessian matrices, Variance-Covariance matrices, Standard Errors, t-values, and p-values.
   * **Bilingual Support**: All docstrings and comments are provided in both **English** and **Korean**.
 
-## 📦 Installation
+## Installation
 
 You can install the latest version of this package directly from PyPI:
 
@@ -39,7 +39,7 @@ For Google Colab or Jupyter Notebook users: Please add an exclamation mark (!) b
 !pip install cvm-simple
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 Here is a simple example: estimating WTP for national park conservation.
 
@@ -69,7 +69,7 @@ print(model.process_plot_data)
 model.calculate_kr_confidence_interval(n_sim=1000)
 ```
 
-## 🔍 Traceable Processes
+## Traceable Processes
 
 You can access intermediate steps to verify calculations.
 
@@ -91,7 +91,7 @@ You can access intermediate steps to verify calculations.
 print(model.process6_statistics)
 ```
 
-## 📌 Parameter Guide
+## Parameter Guide
 
 | Parameter | Description | Recommendation |
 |:----------|:------------|:---------------|
@@ -112,14 +112,14 @@ print(model.process6_statistics)
  * **지불 거부자 제외**: 분석을 수행하기 전에, 반드시 데이터에서 "지불거부자(Protest responses)"를 제외해야 합니다.
  * 지불거부자란? 해당 재화의 가치가 없어서가 아니라, 세금 납부 방식이나 설문 시나리오 자체에 대한 반감 때문에 '아니오(0원)'를 선택한 응답자를 말합니다. 이러한 응답자가 포함될 경우 지불용의액(WTP)이 과소 추정되는 등 결과에 편향(Bias)이 발생할 수 있습니다. 이 패키지는 지불거부자가 제거된 유효한 응답 데이터만을 입력으로 가정합니다.
 
-## 🌟 주요 기능
+## 주요 기능
 
   * **로직 완벽 구현**: 주로 사용되는 "로그-로짓(Log-Logit)" 모형($V = a + b \ln(Bid)$)을 그대로 따릅니다.
   * **과정 추적 기능**: 분석의 중간 과정(Process 1\~6)을 속성으로 제공합니다.
   * **통계적 추론**: 최적화 결과뿐만 아니라 헤시안 행렬, 공분산 행렬, 표준오차, t값, p값 등 상세 통계량을 제공합니다.
   * **이중 언어 지원**: 코드 내 모든 설명이 **한국어**와 **영어**로 병기되어 있습니다.
 
-## 📦 설치 방법
+## 설치 방법
 
 PyPI를 통해 최신 버전을 바로 설치할 수 있습니다.
 
@@ -132,7 +132,7 @@ Google Colab 또는 Jupyter Notebook 사용 시: 명령어 앞에 느낌표(!)�
 !pip install cvm-simple
 ```
 
-## 🚀 사용 예시
+## 사용 예시
 
 도시 공원 환경 개선을 위한 지불의사금액(WTP)을 추정하는 예시입니다.
 
@@ -162,7 +162,7 @@ print(model.process_plot_data)
 model.calculate_kr_confidence_interval(n_sim=1000)
 ```
 
-## 🔍 계산 과정 추적 
+## 계산 과정 추적 
 
 `model.processN` 속성을 호출하여 각 단계별 계산 값을 확인할 수 있습니다.
 
@@ -182,7 +182,7 @@ model.calculate_kr_confidence_interval(n_sim=1000)
 print(model.process6_statistics)
 ```
 
-## 📌 파라미터 가이드
+## 파라미터 가이드
 
 | 파라미터 | 설명 | 권장값 |
 |:---------|:-----|:-------|

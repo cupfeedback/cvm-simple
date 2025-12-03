@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cvm-simple"
-version = "0.1.2"
+version = "0.1.3"
 description = "Single-Bounded CVM Analysis"
 readme = "README.md"
 license = {text = "MIT"}
